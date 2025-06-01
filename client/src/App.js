@@ -10,13 +10,14 @@ import EditUser from "./components/editUser";
 
 //import routers
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./components/login";
 
 function App() {
   return (
     <BrowserRouter>
-      <NavBar />
       <Routes>
-        <Route path="/" element={<KunPaosCoffee />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<KunPaosCoffee />} />
         <Route path="/all" element={<AllUser />} />
         <Route path="/add" element={<AddUser />} />
         <Route path="/edit/:id" element={<EditUser />} />

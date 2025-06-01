@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 
-const Connection = async (username, password) => {
-  const URLa = `mongodb+srv://${username}:${password}@cluster0.q7veg.mongodb.net/react_basic_crud`;
+const Connection = () => {
+  const URLa =
+    "mongodb+srv://kavezo:rkPLxRSJSpcSjeap@cluster0.q7veg.mongodb.net/react_basic_crud?retryWrites=true&w=majority&appName=Cluster0";
 
   try {
-    await mongoose.connect(URLa, {
+    mongoose.connect(URLa, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
