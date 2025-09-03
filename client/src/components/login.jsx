@@ -1,7 +1,7 @@
-// src/LoginPage.jsx
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -12,22 +12,24 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // Fetch all users and find the one matching email & password
+      // Fetch all users from backend
       const response = await axios.get("http://localhost:8000/all");
       const users = response.data;
 
-      const user = users.find(
-        (u) => u.email === email && u.password === password
-      );
+      // Find user by email
+      const user = users.find((u) => u.email === email);
 
       if (user) {
-        setMessage(`Welcome, ${user.email}!`);
+        // Compare entered password with hashed password
+        const isPasswordCorrect = bcrypt.compareSync(password, user.password);
 
-        // Store user data in local storage
-        localStorage.setItem("user", JSON.stringify(user));
-
-        // Redirect to the home page
-        navigate("/all");
+        if (isPasswordCorrect) {
+          setMessage(`Welcome, ${user.email}!`);
+          localStorage.setItem("user", JSON.stringify(user)); // store user
+          navigate("/all"); // redirect to dashboard or all users
+        } else {
+          setMessage("Invalid email or password");
+        }
       } else {
         setMessage("Invalid email or password");
       }

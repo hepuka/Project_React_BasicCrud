@@ -56,3 +56,14 @@ export const deleteUser = async (request, response) => {
     response.status(409).json({ message: error.message });
   }
 };
+
+// Logout user
+export const logoutUser = (req, res) => {
+  try {
+    // If using cookies / session, clear it
+    res.clearCookie("token"); // clear cookie token
+    res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    res.status(500).json({ message: "Logout failed" });
+  }
+};

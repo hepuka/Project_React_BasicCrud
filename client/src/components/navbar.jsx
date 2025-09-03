@@ -1,8 +1,8 @@
 //import tools
-import React from "react";
-import { AppBar, Toolbar, styled } from "@mui/material";
-import { NavLink } from "react-router-dom";
 
+import { AppBar, Toolbar, styled, Button } from "@mui/material";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 //styles
 const Header = styled(AppBar)`
   background: #111111;
@@ -16,12 +16,31 @@ const Tabs = styled(NavLink)`
 `;
 //main
 const NavBar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:8000/logout"); // call backend
+      navigate("/"); // redirect to login page
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
+
   return (
     <Header position="static">
       <Toolbar>
         <Tabs to="/">***KUNPAO's COFFEE MANAGEMENT SYSTEM ***</Tabs>
-        <Tabs to="/all"> All User </Tabs>
-        <Tabs to="/add"> Add User </Tabs>
+        <Tabs to="/all">All User</Tabs>
+        <Tabs to="/add">Add User</Tabs>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleLogout}
+          style={{ marginLeft: "auto" }} // push button to right
+        >
+          Logout
+        </Button>
       </Toolbar>
     </Header>
   );

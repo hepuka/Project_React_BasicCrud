@@ -2,7 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addUser } from "../service/api";
+
 import bcrypt from "bcryptjs";
+
 import {
   FormGroup,
   FormControl,
