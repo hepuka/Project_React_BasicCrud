@@ -16,17 +16,17 @@ const Login = () => {
       const response = await axios.get("http://localhost:8000/all");
       const users = response.data;
 
-      // Find user by email
       const user = users.find((u) => u.email === email);
 
       if (user) {
-        // Compare entered password with hashed password
         const isPasswordCorrect = bcrypt.compareSync(password, user.password);
 
         if (isPasswordCorrect) {
-          setMessage(`Welcome, ${user.email}!`);
-          localStorage.setItem("user", JSON.stringify(user)); // store user
-          navigate("/all"); // redirect to dashboard or all users
+          const token = Math.random().toString(36).substr(2);
+          localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem("token", token);
+
+          navigate("/all");
         } else {
           setMessage("Invalid email or password");
         }
