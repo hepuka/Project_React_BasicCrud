@@ -2,15 +2,13 @@
 import "./App.css";
 
 //import components
-import NavBar from "./components/navbar.component";
+import NavBar from "./components/navbar.jsx";
 import KunPaosCoffee from "./components/kunpaoscoffee";
 import AllUser from "./components/allUser";
 import AddUser from "./components/addUser.component";
 import EditUser from "./components/editUser";
-
-//import routers
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./components/login";
+import Login from "./components/login.jsx";
 
 function App() {
   return (

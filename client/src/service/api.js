@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const URL = "http://localhost:8000";
-//const URL = "https://silver-semifreddo-34c62e.netlify.app";
 
 export const addUser = async (data) => {
   try {

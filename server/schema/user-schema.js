@@ -6,6 +6,8 @@ const userSchema = mongoose.Schema({
   username: String,
   email: String,
   phone: Number,
+  password: String,
+  repassword: String,
 });
 
 autoIncrement.initialize(mongoose.connection);

@@ -10,6 +10,7 @@ import {
   Button,
   styled,
 } from "@mui/material";
+import NavBar from "./navbar.jsx";
 
 const StyledTable = styled(Table)`
   width: 70%;
@@ -51,46 +52,49 @@ const AllUser = () => {
   };
 
   return (
-    <StyledTable>
-      <TableHead>
-        <THead>
-          <TCell>Name</TCell>
-          <TCell>Username</TCell>
-          <TCell>Email</TCell>
-          <TCell>Phone</TCell>
-          <TCell>Settings</TCell>
-        </THead>
-      </TableHead>
+    <>
+      <NavBar />
+      <StyledTable>
+        <TableHead>
+          <THead>
+            <TCell>Name</TCell>
+            <TCell>Username</TCell>
+            <TCell>Email</TCell>
+            <TCell>Phone</TCell>
+            <TCell>Settings</TCell>
+          </THead>
+        </TableHead>
 
-      <TableBody>
-        {users.map((user) => (
-          <TBody key={user._id}>
-            <TCell>{user.name}</TCell>
-            <TCell>{user.username}</TCell>
-            <TCell>{user.email}</TCell>
-            <TCell>{user.phone}</TCell>
-            <TCell>
-              <Button
-                color="primary"
-                variant="outlined"
-                style={{ marginRight: 15 }}
-                component={Link}
-                to={`/edit/${user._id}`}
-              >
-                Edit
-              </Button>{" "}
-              <Button
-                color="error"
-                variant="outlined"
-                onClick={() => deleteUserData(user._id)}
-              >
-                Delete
-              </Button>{" "}
-            </TCell>
-          </TBody>
-        ))}
-      </TableBody>
-    </StyledTable>
+        <TableBody>
+          {users.map((user) => (
+            <TBody key={user._id}>
+              <TCell>{user.name}</TCell>
+              <TCell>{user.username}</TCell>
+              <TCell>{user.email}</TCell>
+              <TCell>{user.phone}</TCell>
+              <TCell>
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  style={{ marginRight: 15 }}
+                  component={Link}
+                  to={`/edit/${user._id}`}
+                >
+                  Edit
+                </Button>{" "}
+                <Button
+                  color="error"
+                  variant="outlined"
+                  onClick={() => deleteUserData(user._id)}
+                >
+                  Delete
+                </Button>{" "}
+              </TCell>
+            </TBody>
+          ))}
+        </TableBody>
+      </StyledTable>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addUser } from "../service/api";
-
+import bcrypt from "bcryptjs";
 import {
   FormGroup,
   FormControl,
@@ -26,6 +26,8 @@ const templateUser = {
   username: "",
   email: "",
   phone: "",
+  password: "",
+  repassword: "",
 };
 
 const AddUser = () => {
@@ -38,9 +40,20 @@ const AddUser = () => {
   };
 
   const addUserDetails = async () => {
-    await addUser(user);
+    if (user.password !== user.repassword) {
+      alert("Passwords do not match!");
+      return;
+    }
 
-    //ezzel adjuk meg, hogy az add gombra kattintva rögtön át is ugrik az All User oldalra
+    // Hash the password before sending
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(user.password, salt);
+
+    const userToSend = { ...user, password: hashedPassword };
+    delete userToSend.repassword;
+
+    await addUser(userToSend);
+
     navigate("/all");
   };
 
@@ -50,26 +63,41 @@ const AddUser = () => {
 
       <FormControl>
         <InputLabel>Name</InputLabel>
-
-        <Input onChange={(e) => onValueChange(e)} name="name" />
+        <Input type="text" onChange={(e) => onValueChange(e)} name="name" />
       </FormControl>
 
       <FormControl>
         <InputLabel>Username</InputLabel>
-
-        <Input onChange={(e) => onValueChange(e)} name="username" />
+        <Input type="text" onChange={(e) => onValueChange(e)} name="username" />
       </FormControl>
 
       <FormControl>
         <InputLabel>Email</InputLabel>
-
-        <Input onChange={(e) => onValueChange(e)} name="email" />
+        <Input type="email" onChange={(e) => onValueChange(e)} name="email" />
       </FormControl>
 
       <FormControl>
         <InputLabel>Phone</InputLabel>
+        <Input type="number" onChange={(e) => onValueChange(e)} name="phone" />
+      </FormControl>
 
-        <Input onChange={(e) => onValueChange(e)} name="phone" />
+      <FormControl>
+        <InputLabel>Password</InputLabel>
+
+        <Input
+          type="password"
+          onChange={(e) => onValueChange(e)}
+          name="password"
+        />
+      </FormControl>
+      <FormControl>
+        <InputLabel>Re-Password</InputLabel>
+
+        <Input
+          type="password"
+          onChange={(e) => onValueChange(e)}
+          name="repassword"
+        />
       </FormControl>
 
       <FormControl>

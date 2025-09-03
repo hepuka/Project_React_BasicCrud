@@ -20,8 +20,8 @@ const NavBar = () => {
     <Header position="static">
       <Toolbar>
         <Tabs to="/">***KUNPAO's COFFEE MANAGEMENT SYSTEM ***</Tabs>
-        <Tabs to="all"> All User </Tabs>
-        <Tabs to="add"> Add User </Tabs>
+        <Tabs to="/all"> All User </Tabs>
+        <Tabs to="/add"> Add User </Tabs>
       </Toolbar>
     </Header>
   );
