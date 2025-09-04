@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { addUser } from "../service/api";
 
 import bcrypt from "bcryptjs";
@@ -121,6 +121,9 @@ const AddUser = () => {
       <FormControl>
         <Button variant="contained" onClick={() => addUserDetails()}>
           Add New User
+        </Button>
+        <Button>
+          <Link to="/all">Back</Link>
         </Button>
       </FormControl>
     </Container>

@@ -15,6 +15,7 @@ export const getUsers = async () => {
     return await axios.get(`${URL}/all`);
   } catch (error) {
     console.error("Error while calling getUsers API", error);
+    return null;
   }
 };
 

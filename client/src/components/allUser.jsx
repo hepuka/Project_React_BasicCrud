@@ -42,8 +42,12 @@ const AllUser = () => {
   }, []);
 
   const getAllUsers = async () => {
-    let res = await getUsers();
-    setUsers(res.data);
+    const res = await getUsers();
+    if (res && res.data) {
+      setUsers(res.data);
+    } else {
+      setUsers([]);
+    }
   };
 
   const deleteUserData = async (id) => {
@@ -74,6 +78,15 @@ const AllUser = () => {
               <TCell>{user.phone}</TCell>
               <TCell>
                 <Button
+                  color="secondary"
+                  variant="outlined"
+                  style={{ marginRight: 15 }}
+                  component={Link}
+                  to={`/user/${user._id}`}
+                >
+                  user Details
+                </Button>
+                <Button
                   color="primary"
                   variant="outlined"
                   style={{ marginRight: 15 }}
@@ -81,14 +94,14 @@ const AllUser = () => {
                   to={`/${user._id}`}
                 >
                   Edit
-                </Button>{" "}
+                </Button>
                 <Button
                   color="error"
                   variant="outlined"
                   onClick={() => deleteUserData(user._id)}
                 >
                   Delete
-                </Button>{" "}
+                </Button>
               </TCell>
             </TBody>
           ))}

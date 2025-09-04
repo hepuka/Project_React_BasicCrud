@@ -1,4 +1,5 @@
 import User from "../schema/user-schema.js";
+import bcrypt from "bcryptjs";
 
 // Save data of the user in database
 export const addUser = async (req, res) => {
@@ -57,10 +58,35 @@ export const deleteUser = async (request, response) => {
   }
 };
 
-export const logoutUser = (req, res) => {
+export const changePassword = async (req, res) => {
+  const { email, password, newpassword, repassword } = req.body;
+
   try {
-    res.status(200).json({ message: "Logout successful" });
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch)
+      return res.status(409).json({ message: "Current password is incorrect" });
+
+    if (newpassword !== repassword)
+      return res.status(409).json({ message: "New passwords do not match" });
+
+    const sameAsOld = await bcrypt.compare(newpassword, user.password);
+    if (sameAsOld)
+      return res
+        .status(409)
+        .json({ message: "New password cannot be same as current password" });
+
+    const hashedPassword = await bcrypt.hash(newpassword, 10);
+
+    // Only update the password field
+    await User.updateOne({ email }, { $set: { password: hashedPassword } });
+
+    // ✅ Send response only once
+    res.status(200).json({ message: "Password updated successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Logout failed" });
+    console.error("Change password error:", error);
+    res.status(500).json({ message: "Error updating password", error });
   }
 };

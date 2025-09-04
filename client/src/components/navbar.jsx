@@ -1,9 +1,6 @@
-//import tools
-
 import { AppBar, Toolbar, styled, Button } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
-import axios from "axios";
-//styles
+
 const Header = styled(AppBar)`
   background: #111111;
 `;
@@ -22,7 +19,7 @@ const NavBar = () => {
     try {
       localStorage.removeItem("user");
       localStorage.removeItem("token");
-      navigate("/"); // redirect to login page
+      navigate("/");
     } catch (error) {
       console.error("Logout failed", error);
     }
@@ -31,14 +28,14 @@ const NavBar = () => {
   return (
     <Header position="static">
       <Toolbar>
-        <Tabs to="/">***KUNPAO's COFFEE MANAGEMENT SYSTEM ***</Tabs>
+        <Tabs to="/dashboard">***KUNPAO's COFFEE MANAGEMENT SYSTEM ***</Tabs>
         <Tabs to="/all">All User</Tabs>
         <Tabs to="/add">Add User</Tabs>
         <Button
           variant="contained"
           color="secondary"
           onClick={handleLogout}
-          style={{ marginLeft: "auto" }} // push button to right
+          style={{ marginLeft: "auto" }}
         >
           Logout
         </Button>
