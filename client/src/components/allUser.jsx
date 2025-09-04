@@ -78,7 +78,7 @@ const AllUser = () => {
                   variant="outlined"
                   style={{ marginRight: 15 }}
                   component={Link}
-                  to={`/edit/${user._id}`}
+                  to={`/${user._id}`}
                 >
                   Edit
                 </Button>{" "}

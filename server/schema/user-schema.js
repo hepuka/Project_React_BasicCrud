@@ -2,17 +2,18 @@ import mongoose from "mongoose";
 import autoIncrement from "mongoose-auto-increment";
 
 const userSchema = mongoose.Schema({
-  name: String,
-  username: String,
-  email: String,
-  phone: Number,
-  password: String,
-  repassword: String,
+  name: { type: String, required: true },
+  username: { type: String, required: true },
+  email: { type: String, required: true },
+  phone: { type: Number, required: true },
+  role: { type: String, required: true },
+  password: { type: String, required: true },
+  repassword: { type: String, required: true },
 });
 
 autoIncrement.initialize(mongoose.connection);
 userSchema.plugin(autoIncrement.plugin, "user");
-// we need to turn it into a model
+
 const postUser = mongoose.model("user", userSchema);
 
 export default postUser;

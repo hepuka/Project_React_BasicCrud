@@ -27,6 +27,7 @@ const templateUser = {
   username: "",
   email: "",
   phone: "",
+  role: "",
   password: "",
   repassword: "",
 };
@@ -80,6 +81,11 @@ const AddUser = () => {
       <FormControl>
         <InputLabel>Phone</InputLabel>
         <Input type="number" onChange={(e) => onValueChange(e)} name="phone" />
+      </FormControl>
+
+      <FormControl>
+        <InputLabel>Role</InputLabel>
+        <Input type="text" onChange={(e) => onValueChange(e)} name="role" />
       </FormControl>
 
       <FormControl>
