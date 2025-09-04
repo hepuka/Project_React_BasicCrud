@@ -1,21 +1,20 @@
 import User from "../schema/user-schema.js";
 import bcrypt from "bcryptjs";
 
-// Save data of the user in database
 export const addUser = async (req, res) => {
-  const user = req.body;
-
-  const newUser = new User(user);
-
   try {
+    const user = req.body;
+
+    const newUser = new User(user);
     await newUser.save();
+
     res.status(201).json(newUser);
   } catch (error) {
+    console.error(error.message);
     res.status(409).json({ message: error.message });
   }
 };
 
-// Get all users
 export const getUsers = async (req, res) => {
   try {
     const users = await User.find();
@@ -25,7 +24,6 @@ export const getUsers = async (req, res) => {
   }
 };
 
-// Get a user by id
 export const getUser = async (request, response) => {
   try {
     const user = await User.findById(request.params.id);
@@ -35,7 +33,6 @@ export const getUser = async (request, response) => {
   }
 };
 
-// Save data of edited user in the database
 export const editUser = async (request, response) => {
   let user = request.body;
   const editUser = new User(user);
@@ -48,7 +45,6 @@ export const editUser = async (request, response) => {
   }
 };
 
-// deleting data of user from the database
 export const deleteUser = async (request, response) => {
   try {
     await User.deleteOne({ _id: request.params.id });
@@ -83,7 +79,6 @@ export const changePassword = async (req, res) => {
     // Only update the password field
     await User.updateOne({ email }, { $set: { password: hashedPassword } });
 
-    // ✅ Send response only once
     res.status(200).json({ message: "Password updated successfully" });
   } catch (error) {
     console.error("Change password error:", error);

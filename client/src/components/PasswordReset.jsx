@@ -47,7 +47,6 @@ const PasswordReset = () => {
       return;
     }
 
-    // Optional frontend validation before sending
     if (password.newpassword !== password.repassword) {
       setMessage("New passwords do not match");
       return;
@@ -72,13 +71,12 @@ const PasswordReset = () => {
     } catch (error) {
       console.error("Change password error:", error);
 
-      // ✅ Display proper message from backend
       if (
         error.response &&
         error.response.data &&
         error.response.data.message
       ) {
-        setMessage(error.response.data.message); // e.g. "Current password is incorrect"
+        setMessage(error.response.data.message);
       } else {
         setMessage("Something went wrong. Check console.");
       }

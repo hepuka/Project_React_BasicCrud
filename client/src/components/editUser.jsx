@@ -26,11 +26,13 @@ const templateUser = {
   username: "",
   email: "",
   phone: "",
+  role: "",
 };
 
 const EditUser = () => {
   const [user, setUser] = useState(templateUser);
   const { id } = useParams();
+  console.log(user);
 
   const navigate = useNavigate();
 
@@ -93,6 +95,16 @@ const EditUser = () => {
           onChange={(e) => onValueChange(e)}
           name="phone"
           value={user.phone}
+        />
+      </FormControl>
+      <FormControl>
+        <InputLabel>Role</InputLabel>
+
+        <Input
+          disabled
+          onChange={(e) => onValueChange(e)}
+          name="role"
+          value={user.role}
         />
       </FormControl>
 
