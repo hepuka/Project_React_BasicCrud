@@ -57,11 +57,8 @@ export const deleteUser = async (request, response) => {
   }
 };
 
-// Logout user
 export const logoutUser = (req, res) => {
   try {
-    res.clearCookie("token");
-
     res.status(200).json({ message: "Logout successful" });
   } catch (error) {
     res.status(500).json({ message: "Logout failed" });

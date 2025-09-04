@@ -12,10 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={token ? <Navigate to="/all" replace /> : <Login />}
-        />
+        <Route path="/" element={token ? <Navigate to="/all" /> : <Login />} />
         <Route path="/dashboard" element={<KunPaosCoffee />} />
         <Route path="/all" element={<AllUser />} />
         <Route path="/add" element={<AddUser />} />

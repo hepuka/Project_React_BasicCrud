@@ -20,7 +20,6 @@ const NavBar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:8000/logout");
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       navigate("/"); // redirect to login page

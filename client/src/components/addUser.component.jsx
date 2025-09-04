@@ -42,12 +42,23 @@ const AddUser = () => {
   };
 
   const addUserDetails = async () => {
+    if (
+      user.name === "" ||
+      user.username === "" ||
+      user.email === "" ||
+      user.phone === "" ||
+      user.role === "" ||
+      user.password === "" ||
+      user.repassword === ""
+    ) {
+      return;
+    }
+
     if (user.password !== user.repassword) {
       alert("Passwords do not match!");
       return;
     }
 
-    // Hash the password before sending
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(user.password, salt);
 
