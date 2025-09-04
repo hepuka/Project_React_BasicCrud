@@ -65,6 +65,7 @@ const AllUser = () => {
             <TCell>Username</TCell>
             <TCell>Email</TCell>
             <TCell>Phone</TCell>
+            <TCell>Role</TCell>
             <TCell>Settings</TCell>
           </THead>
         </TableHead>
@@ -76,6 +77,7 @@ const AllUser = () => {
               <TCell>{user.username}</TCell>
               <TCell>{user.email}</TCell>
               <TCell>{user.phone}</TCell>
+              <TCell>{user.role}</TCell>
               <TCell>
                 <Button
                   color="secondary"
@@ -84,7 +86,7 @@ const AllUser = () => {
                   component={Link}
                   to={`/user/${user._id}`}
                 >
-                  user Details
+                  Profile
                 </Button>
                 <Button
                   color="primary"
