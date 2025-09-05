@@ -7,6 +7,7 @@ import {
   deleteUser,
   changePassword,
 } from "../controller/user-controller.js";
+import { addBook } from "../controller/book-controller.js";
 import { loginUser, logoutUser } from "../controller/login-controller.js";
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.post("/logout", logoutUser);
 router.get("/:id", getUser);
 router.put("/:id", editUser);
 router.delete("/:id", deleteUser);
+router.post("/addBook", addBook);
 
 export default router;

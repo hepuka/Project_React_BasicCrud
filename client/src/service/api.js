@@ -42,3 +42,11 @@ export const deleteUser = async (id) => {
     console.error("Error while calling delete API", error);
   }
 };
+
+export const addBook = async (data) => {
+  try {
+    return await axios.post(`${URL}/addBook`, data);
+  } catch (error) {
+    console.error("Error while calling add Book API", error);
+  }
+};

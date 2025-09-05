@@ -5,6 +5,7 @@ const Connection = () => {
     "mongodb+srv://kavezo:rkPLxRSJSpcSjeap@cluster0.q7veg.mongodb.net/react_basic_crud?retryWrites=true&w=majority&appName=Cluster0";
 
   try {
+    mongoose.set("strictQuery", true);
     mongoose.connect(URLa, {
       useUnifiedTopology: true,
       useNewUrlParser: true,

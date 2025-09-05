@@ -28,6 +28,7 @@ const NavBar = () => {
       <NavLink to="/dashboard">KUNPAO's LIBRARY MANAGEMENT SYSTEM</NavLink>
       <NavLink to="/dashboard/all">All User</NavLink>
       <NavLink to="/dashboard/add">Add User</NavLink>
+      <NavLink to="/dashboard/addBook">Add New Book</NavLink>
       <button onClick={handleLogout}>Logout</button>
     </div>
   );

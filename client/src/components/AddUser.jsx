@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { addUser } from "../service/api";
-
 import bcrypt from "bcryptjs";
 
 import {

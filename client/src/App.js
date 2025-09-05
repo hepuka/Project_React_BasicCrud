@@ -8,6 +8,7 @@ import Login from "./components/Login.jsx";
 import UserDetails from "./components/UserDetails.jsx";
 import PasswordReset from "./components/PasswordReset.jsx";
 import MainContent from "./components/MainContent.jsx";
+import AddnewBook from "./components/AddnewBook.jsx";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route index element={<MainContent />} />
           <Route path="all" element={<AllUser />} />
           <Route path="add" element={<AddUser />} />
+          <Route path="addBook" element={<AddnewBook />} />
           <Route path=":id" element={<EditUser />} />
           <Route path="user/:id" element={<UserDetails />} />
           <Route path="reset" element={<PasswordReset />} />
