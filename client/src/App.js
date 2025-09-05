@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/login.jsx";
 import UserDetails from "./components/UserDetails.jsx";
 import PasswordReset from "./components/PasswordReset.jsx";
+import MainContent from "./components/MainContent.jsx";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />}>
+          <Route index element={<MainContent />} />
           <Route path="all" element={<AllUser />} />
           <Route path="add" element={<AddUser />} />
           <Route path=":id" element={<EditUser />} />

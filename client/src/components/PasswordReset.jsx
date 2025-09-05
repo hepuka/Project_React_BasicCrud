@@ -30,7 +30,7 @@ const PasswordReset = () => {
   const storedUser = JSON.parse(localStorage.getItem("user") || "null");
   const [password, setPassword] = useState(templateUser);
   const [message, setMessage] = useState("");
-  console.log(storedUser);
+
   const navigate = useNavigate();
 
   if (!storedUser) {
