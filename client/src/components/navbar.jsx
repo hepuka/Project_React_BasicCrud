@@ -1,5 +1,6 @@
 import { AppBar, Toolbar, styled, Button } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Header = styled(AppBar)`
   background: #111111;
@@ -11,14 +12,23 @@ const Tabs = styled(NavLink)`
   color: inherit;
   text-decoration: none;
 `;
-//main
+
 const NavBar = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
+      const storedUser = JSON.parse(localStorage.getItem("user") || "null");
+
+      if (storedUser?.email) {
+        await axios.post("http://localhost:8000/logout", {
+          email: storedUser.email,
+        });
+      }
+
       localStorage.removeItem("user");
       localStorage.removeItem("token");
+
       navigate("/");
     } catch (error) {
       console.error("Logout failed", error);

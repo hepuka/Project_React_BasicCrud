@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import bcrypt from "bcryptjs";
-import { use } from "react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +9,7 @@ const Login = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  /*   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
@@ -38,6 +37,31 @@ const Login = () => {
     } catch (error) {
       console.error(error);
       setMessage("Something went wrong");
+    }
+  }; */
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:8000/login", {
+        email,
+        password,
+      });
+
+      const { user } = response.data;
+
+      const token = Math.random().toString(36).substr(2);
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
+
+      navigate("/all");
+    } catch (error) {
+      if (error.response) {
+        setMessage(error.response.data.message);
+      } else {
+        setMessage("Something went wrong");
+      }
     }
   };
 

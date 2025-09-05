@@ -7,15 +7,15 @@ import {
   deleteUser,
   changePassword,
 } from "../controller/user-controller.js";
+import { loginUser, logoutUser } from "../controller/login-controller.js";
 
 const router = express.Router();
 
-// Static routes first
 router.post("/add", addUser);
 router.get("/all", getUsers);
 router.put("/change-password", changePassword);
-
-// Dynamic routes last
+router.post("/login", loginUser);
+router.post("/logout", logoutUser);
 router.get("/:id", getUser);
 router.put("/:id", editUser);
 router.delete("/:id", deleteUser);
