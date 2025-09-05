@@ -67,7 +67,7 @@ const AddUser = () => {
 
     await addUser(userToSend);
 
-    navigate("/all");
+    navigate("/dashboard/all");
   };
 
   return (
@@ -123,7 +123,7 @@ const AddUser = () => {
           Add New User
         </Button>
         <Button>
-          <Link to="/all">Back</Link>
+          <Link to="/dashboard">Back</Link>
         </Button>
       </FormControl>
     </Container>

@@ -9,37 +9,6 @@ const Login = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  /*   const handleLogin = async (e) => {
-    e.preventDefault();
-
-    try {
-      // Fetch all users from backend
-      const response = await axios.get("http://localhost:8000/all");
-      const users = response.data;
-
-      const user = users.find((u) => u.email === email);
-
-      if (user) {
-        const isPasswordCorrect = bcrypt.compareSync(password, user.password);
-
-        if (isPasswordCorrect) {
-          const token = Math.random().toString(36).substr(2);
-          localStorage.setItem("user", JSON.stringify(user));
-          localStorage.setItem("token", token);
-
-          navigate("/all");
-        } else {
-          setMessage("Invalid email or password");
-        }
-      } else {
-        setMessage("Invalid email or password");
-      }
-    } catch (error) {
-      console.error(error);
-      setMessage("Something went wrong");
-    }
-  }; */
-
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -55,7 +24,7 @@ const Login = () => {
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", token);
 
-      navigate("/all");
+      navigate("/dashboard");
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.message);

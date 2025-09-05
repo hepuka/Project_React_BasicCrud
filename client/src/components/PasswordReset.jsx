@@ -30,7 +30,7 @@ const PasswordReset = () => {
   const storedUser = JSON.parse(localStorage.getItem("user") || "null");
   const [password, setPassword] = useState(templateUser);
   const [message, setMessage] = useState("");
-
+  console.log(storedUser);
   const navigate = useNavigate();
 
   if (!storedUser) {
@@ -67,7 +67,7 @@ const PasswordReset = () => {
 
       setMessage(response.data.message);
       setPassword(templateUser);
-      navigate("/all");
+      navigate("/dashboard/all");
     } catch (error) {
       console.error("Change password error:", error);
 
@@ -120,7 +120,7 @@ const PasswordReset = () => {
           Send
         </Button>
         <Button>
-          <Link href="/all">Back</Link>
+          <Link href={`/dashboard/user/${storedUser._id}`}>Back</Link>
         </Button>
       </FormControl>
     </Container>

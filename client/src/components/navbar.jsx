@@ -1,17 +1,5 @@
-import { AppBar, Toolbar, styled, Button } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-
-const Header = styled(AppBar)`
-  background: #111111;
-`;
-
-const Tabs = styled(NavLink)`
-  font-size: 20px;
-  margin-right: 20px;
-  color: inherit;
-  text-decoration: none;
-`;
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -36,21 +24,12 @@ const NavBar = () => {
   };
 
   return (
-    <Header position="static">
-      <Toolbar>
-        <Tabs to="/dashboard">***KUNPAO's COFFEE MANAGEMENT SYSTEM ***</Tabs>
-        <Tabs to="/all">All User</Tabs>
-        <Tabs to="/add">Add User</Tabs>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleLogout}
-          style={{ marginLeft: "auto" }}
-        >
-          Logout
-        </Button>
-      </Toolbar>
-    </Header>
+    <div className="navbar">
+      <NavLink to="/dashboard">KUNPAO's LIBRARY MANAGEMENT SYSTEM</NavLink>
+      <NavLink to="/dashboard/all">All User</NavLink>
+      <NavLink to="/dashboard/add">Add User</NavLink>
+      <button onClick={handleLogout}>Logout</button>
+    </div>
   );
 };
 

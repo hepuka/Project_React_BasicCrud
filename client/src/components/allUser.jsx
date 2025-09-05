@@ -57,7 +57,6 @@ const AllUser = () => {
 
   return (
     <>
-      <NavBar />
       <StyledTable>
         <TableHead>
           <THead>
@@ -84,7 +83,7 @@ const AllUser = () => {
                   variant="outlined"
                   style={{ marginRight: 15 }}
                   component={Link}
-                  to={`/user/${user._id}`}
+                  to={`/dashboard/user/${user._id}`}
                 >
                   Profile
                 </Button>
@@ -93,7 +92,7 @@ const AllUser = () => {
                   variant="outlined"
                   style={{ marginRight: 15 }}
                   component={Link}
-                  to={`/${user._id}`}
+                  to={`/dashboard/${user._id}`}
                 >
                   Edit
                 </Button>

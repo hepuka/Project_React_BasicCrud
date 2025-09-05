@@ -38,9 +38,12 @@ const UserDetails = () => {
         variant="outlined"
         style={{ marginRight: 15 }}
         component={Link}
-        to={`/reset`}
+        to={`/dashboard/reset`}
       >
         Change password
+      </Button>
+      <Button>
+        <Link to="/dashboard/all">Back</Link>
       </Button>
     </div>
   );

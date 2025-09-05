@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+}
+
+.navbar {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  padding: 20px;
+  height: 100vh;
+  gap: 20px;
+}
+
+.main {
+  flex: 3;
+  height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: #2d2d26;
+}
+a:hover {
+  color: #9c27b0;
+}
+
+button {
+  background-color: #9c27b0;
+  color: #f0f0f0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 50%;
+  font-weight: bold;
+  align-self: center;
+  margin-top: 40px;
+}
+
+button:hover {
+  background-color: #7b1fa2;
+}
