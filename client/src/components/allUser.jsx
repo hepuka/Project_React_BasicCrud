@@ -10,8 +10,6 @@ import {
   Button,
   styled,
 } from "@mui/material";
-import NavBar from "./navbar.jsx";
-
 const StyledTable = styled(Table)`
   width: 70%;
   margin: 150px auto 0 auto;

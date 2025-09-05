@@ -1,10 +1,10 @@
 import "./App.css";
-import Dashboard from "./components/dashboard.jsx";
-import AllUser from "./components/allUser";
-import AddUser from "./components/addUser.component";
-import EditUser from "./components/editUser";
+import Dashboard from "./components/Dashboard.jsx";
+import AllUser from "./components/AllUser.jsx";
+import AddUser from "./components/AddUser.jsx";
+import EditUser from "./components/EditUser.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./components/login.jsx";
+import Login from "./components/Login.jsx";
 import UserDetails from "./components/UserDetails.jsx";
 import PasswordReset from "./components/PasswordReset.jsx";
 import MainContent from "./components/MainContent.jsx";
