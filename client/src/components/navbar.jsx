@@ -29,6 +29,7 @@ const NavBar = () => {
       <NavLink to="/dashboard/all">All User</NavLink>
       <NavLink to="/dashboard/add">Add User</NavLink>
       <NavLink to="/dashboard/addBook">Add New Book</NavLink>
+      <NavLink to="/dashboard/searchbook">Search Book</NavLink>
       <button onClick={handleLogout}>Logout</button>
     </div>
   );

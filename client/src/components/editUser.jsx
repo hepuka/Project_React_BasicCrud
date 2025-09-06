@@ -32,7 +32,6 @@ const templateUser = {
 const EditUser = () => {
   const [user, setUser] = useState(templateUser);
   const { id } = useParams();
-  console.log(user);
 
   const navigate = useNavigate();
 
@@ -47,7 +46,7 @@ const EditUser = () => {
 
   const editUserDetails = async () => {
     await editUser(user, id);
-    navigate("/all");
+    navigate("/dashboard/all");
   };
 
   const onValueChange = (e) => {

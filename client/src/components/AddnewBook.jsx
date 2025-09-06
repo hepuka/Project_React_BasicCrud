@@ -6,10 +6,19 @@ import {
   Typography,
   styled,
   Button,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { addBook } from "../service/api";
+import {
+  addBook,
+  addLanguage,
+  addCategory,
+  getLanguages,
+  getCategories,
+} from "../service/api";
+import { useEffect } from "react";
 
 const Container = styled(FormGroup)`
   width: 50%;
@@ -32,10 +41,41 @@ const templateBook = {
 
 const AddnewBook = () => {
   const [book, setBook] = useState(templateBook);
+  const [categories, setCategories] = useState([]);
+  const [languages, setLanguages] = useState([]);
+  const [newCategory, setNewCategory] = useState("");
+  const [newLanguage, setNewLanguage] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const catRes = await getCategories();
+      if (catRes && catRes.data) setCategories(catRes.data || []);
+
+      const langRes = await getLanguages();
+      if (langRes && langRes.data) setLanguages(langRes.data || []);
+    };
+    fetchData();
+  }, []);
 
   const onValueChange = (e) => {
     setBook({ ...book, [e.target.name]: e.target.value });
+  };
+
+  const handleAddCategory = async () => {
+    if (newCategory.trim() === "") return;
+    const res = await addCategory({ name: newCategory });
+    setCategories([...categories, res.data]);
+    setBook({ ...book, category: res.data.name });
+    setNewCategory("");
+  };
+
+  const handleAddLanguage = async () => {
+    if (newLanguage.trim() === "") return;
+    const res = await addLanguage({ name: newLanguage });
+    setLanguages([...languages, res.data]);
+    setBook({ ...book, language: res.data.name });
+    setNewLanguage("");
   };
 
   const addBookDetails = async () => {
@@ -57,6 +97,11 @@ const AddnewBook = () => {
     }
     await addBook(book);
     navigate("/dashboard/all");
+  };
+
+  const addNewLanguage = async () => {
+    await addLanguage(newLanguage);
+    alert("Language added successfully");
   };
 
   return (
@@ -92,7 +137,35 @@ const AddnewBook = () => {
 
       <FormControl>
         <InputLabel>Language</InputLabel>
-        <Input type="text" onChange={(e) => onValueChange(e)} name="language" />
+        <Select
+          name="language"
+          value={book.language || ""}
+          onChange={onValueChange}
+        >
+          {languages.map((lang, index) => (
+            <MenuItem
+              key={lang._id || `${lang.name}-${index}`}
+              value={lang.name}
+            >
+              {lang.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <FormControl>
+        <InputLabel>Add New Language</InputLabel>
+        <Input
+          value={newLanguage}
+          onChange={(e) => setNewLanguage(e.target.value)}
+        />
+        <Button
+          onClick={handleAddLanguage}
+          variant="outlined"
+          style={{ marginTop: 10 }}
+        >
+          Add Language
+        </Button>
       </FormControl>
 
       <FormControl>
@@ -112,7 +185,32 @@ const AddnewBook = () => {
 
       <FormControl>
         <InputLabel>Category</InputLabel>
-        <Input type="text" onChange={(e) => onValueChange(e)} name="category" />
+        <Select
+          name="category"
+          value={book.category || ""}
+          onChange={onValueChange}
+        >
+          {categories.map((cat, index) => (
+            <MenuItem key={cat._id || `${cat.name}-${index}`} value={cat.name}>
+              {cat.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <FormControl>
+        <InputLabel>Add New Category</InputLabel>
+        <Input
+          value={newCategory}
+          onChange={(e) => setNewCategory(e.target.value)}
+        />
+        <Button
+          onClick={handleAddCategory}
+          variant="outlined"
+          style={{ marginTop: 10 }}
+        >
+          Add Category
+        </Button>
       </FormControl>
 
       <FormControl>
@@ -127,11 +225,6 @@ const AddnewBook = () => {
       <FormControl>
         <InputLabel>ISBN</InputLabel>
         <Input type="number" onChange={(e) => onValueChange(e)} name="isbn" />
-      </FormControl>
-
-      <FormControl>
-        <InputLabel>Rating</InputLabel>
-        <Input type="number" onChange={(e) => onValueChange(e)} name="rating" />
       </FormControl>
 
       <FormControl>

@@ -50,3 +50,54 @@ export const addBook = async (data) => {
     console.error("Error while calling add Book API", error);
   }
 };
+
+export const addLanguage = async (data) => {
+  try {
+    return await axios.post(`${URL}/addLanguage`, data);
+  } catch (error) {
+    console.error("Error while calling add Language API", error);
+  }
+};
+
+export const addCategory = async (data) => {
+  try {
+    return await axios.post(`${URL}/addCategory`, data);
+  } catch (error) {
+    console.error("Error while calling add Category API", error);
+  }
+};
+
+export const getCategories = async () => {
+  try {
+    return await axios.get(`${URL}/categories`);
+  } catch (error) {
+    console.error("Error while calling getCategories API", error);
+    return null;
+  }
+};
+
+export const getLanguages = async () => {
+  try {
+    return await axios.get(`${URL}/languages`);
+  } catch (error) {
+    console.error("Error while calling getLanguages API", error);
+    return null;
+  }
+};
+
+export const searchBooks = async (filters) => {
+  try {
+    return await axios.post(`${URL}/books/search`, filters);
+  } catch (error) {
+    console.error("Error while calling searchBooks API", error);
+  }
+};
+
+export const getBooks = async () => {
+  try {
+    return await axios.get(`${URL}/books`);
+  } catch (error) {
+    console.error("Error while calling getBooks API", error);
+    return null;
+  }
+};
