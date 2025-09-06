@@ -14,6 +14,7 @@ const bookSchema = mongoose.Schema({
   quantity: { type: Number, required: true },
   isbn: { type: Number, required: true },
   rating: { type: Number, required: true },
+  status: { type: String, required: true },
 });
 
 autoIncrement.initialize(mongoose.connection);

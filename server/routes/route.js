@@ -15,6 +15,8 @@ import {
   getCategories,
   searchBooks,
   getBooks,
+  getBook,
+  editBook,
 } from "../controller/book-controller.js";
 import { loginUser, logoutUser } from "../controller/login-controller.js";
 
@@ -36,5 +38,7 @@ router.get("/books", getBooks);
 router.get("/:id", getUser);
 router.put("/:id", editUser);
 router.delete("/:id", deleteUser);
+router.get("/book/:id", getBook);
+router.put("/book/edit/:id", editBook);
 
 export default router;

@@ -101,3 +101,11 @@ export const getBooks = async () => {
     return null;
   }
 };
+
+export const getBook = async (id) => {
+  try {
+    return await axios.get(`${URL}/book/${id}`);
+  } catch (error) {
+    console.error("Error while calling getBook API", error);
+  }
+};

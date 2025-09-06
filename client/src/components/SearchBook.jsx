@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCategories, searchBooks, getBooks } from "../service/api";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const SearchBook = () => {
   const [filters, setFilters] = useState({
@@ -95,6 +97,8 @@ const SearchBook = () => {
                 <th className="border border-gray-400 px-2 py-1">Rating</th>
                 <th className="border border-gray-400 px-2 py-1">Year</th>
                 <th className="border border-gray-400 px-2 py-1">Category</th>
+                <th className="border border-gray-400 px-2 py-1">Status</th>
+                <th className="border border-gray-400 px-2 py-1">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -126,6 +130,38 @@ const SearchBook = () => {
                   </td>
                   <td className="border border-gray-400 px-2 py-1">
                     {book.category}
+                  </td>
+                  <td className="border border-gray-400 px-2 py-1">
+                    {book.status}
+                  </td>
+                  <td className="border border-gray-400 px-2 py-1 text-center">
+                    <Button
+                      color="secondary"
+                      variant="outlined"
+                      style={{ marginRight: 15 }}
+                      component={Link}
+                      to={`/dashboard/book/${book._id}`}
+                    >
+                      Profile
+                    </Button>
+                    <Button
+                      color="primary"
+                      variant="outlined"
+                      style={{ marginRight: 15 }}
+                      component={Link}
+                      to={`/dashboard/book/edit/${book._id}`}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      color="error"
+                      variant="outlined"
+                      style={{ marginRight: 15 }}
+                      component={Link}
+                      to={`/dashboard/book/${book._id}`}
+                    >
+                      delete
+                    </Button>
                   </td>
                 </tr>
               ))}

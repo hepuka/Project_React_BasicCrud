@@ -10,6 +10,8 @@ import PasswordReset from "./components/PasswordReset.jsx";
 import MainContent from "./components/MainContent.jsx";
 import AddnewBook from "./components/AddnewBook.jsx";
 import SearchBook from "./components/SearchBook.jsx";
+import BookDetails from "./components/BookDetails.jsx";
+import EditBook from "./components/EditBook.jsx";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="searchbook" element={<SearchBook />} />
           <Route path=":id" element={<EditUser />} />
           <Route path="user/:id" element={<UserDetails />} />
+          <Route path="book/:id" element={<BookDetails />} />
+          <Route path="book/edit/:id" element={<EditBook />} />
           <Route path="reset" element={<PasswordReset />} />
         </Route>
       </Routes>
