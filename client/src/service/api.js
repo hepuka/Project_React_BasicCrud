@@ -109,3 +109,19 @@ export const getBook = async (id) => {
     console.error("Error while calling getBook API", error);
   }
 };
+
+export const editBook = async (book, id) => {
+  try {
+    return await axios.put(`${URL}/book/edit/${id}`, book);
+  } catch (error) {
+    console.error("Error while calling editBook API", error);
+  }
+};
+
+export const deleteBook = async (id) => {
+  try {
+    return await axios.delete(`${URL}/book/${id}`);
+  } catch (error) {
+    console.error("Error while calling deleteBook API", error);
+  }
+};

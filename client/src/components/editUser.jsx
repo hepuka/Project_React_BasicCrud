@@ -1,6 +1,5 @@
-import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { editUser, getUser } from "../service/api";
 
 import {
@@ -110,6 +109,9 @@ const EditUser = () => {
       <FormControl>
         <Button variant="contained" onClick={() => editUserDetails()}>
           Edit User
+        </Button>
+        <Button>
+          <Link to="/dashboard/all">Back</Link>
         </Button>
       </FormControl>
     </Container>
