@@ -97,7 +97,7 @@ const AddnewBook = () => {
       return;
     }
     await addBook(book);
-    navigate("/dashboard/all");
+    navigate("/dashboard/searchbook");
   };
 
   const addNewLanguage = async () => {

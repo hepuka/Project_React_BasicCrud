@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { getCategories, searchBooks, getBooks } from "../service/api";
+import {
+  getCategories,
+  searchBooks,
+  getBooks,
+  deleteBook,
+} from "../service/api";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -34,6 +39,17 @@ const SearchBook = () => {
     if (response) setResults(response.data);
   };
 
+  const getAllBooks = async () => {
+    const res = await getBooks();
+    if (res && res.data) {
+      setResults(res.data);
+    }
+  };
+
+  const deleteBookData = async (id) => {
+    await deleteBook(id);
+    getAllBooks();
+  };
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">Search Books</h2>
@@ -156,11 +172,9 @@ const SearchBook = () => {
                     <Button
                       color="error"
                       variant="outlined"
-                      style={{ marginRight: 15 }}
-                      component={Link}
-                      to={`/dashboard/book/${book._id}`}
+                      onClick={() => deleteBookData(book._id)}
                     >
-                      delete
+                      Delete
                     </Button>
                   </td>
                 </tr>

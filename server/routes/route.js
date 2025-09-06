@@ -17,6 +17,7 @@ import {
   getBooks,
   getBook,
   editBook,
+  deleteBook,
 } from "../controller/book-controller.js";
 import { loginUser, logoutUser } from "../controller/login-controller.js";
 
@@ -40,5 +41,6 @@ router.put("/:id", editUser);
 router.delete("/:id", deleteUser);
 router.get("/book/:id", getBook);
 router.put("/book/edit/:id", editBook);
+router.delete("/book/:id", deleteBook);
 
 export default router;
