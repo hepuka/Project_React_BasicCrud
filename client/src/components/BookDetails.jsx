@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getBook, addRent, editBook } from "../service/api";
+import { getBook, editBook } from "../service/api";
 import {
   Button,
   FormControl,
@@ -93,6 +93,11 @@ const BookDetails = () => {
     const updatedBook = { ...book, status: "available" };
     await editBook(updatedBook, book._id);
     setBook(updatedBook);
+
+    await axios.put(`http://localhost:8000/user/${user._id}/return`, {
+      bookid: book._id,
+    });
+
     alert("Book status updated!");
     navigate("/dashboard/searchbook");
   };
