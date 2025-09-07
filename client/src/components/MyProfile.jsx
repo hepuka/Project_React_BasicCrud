@@ -57,6 +57,9 @@ const MyProfile = () => {
               <th>Author</th>
               <th>Category</th>
               <th>ISBN</th>
+              <th>Issued Date</th>
+              <th>End Date</th>
+              <th>Visszahozva</th>
               <th>Státusz</th>
             </tr>
           </thead>
@@ -68,6 +71,9 @@ const MyProfile = () => {
                   <td>{book.author}</td>
                   <td>{book.category}</td>
                   <td>{book.isbn}</td>
+                  <td>{user.rents[index]?.startdate}</td>
+                  <td>{user.rents[index]?.enddate}</td>
+                  <td>{new Date().toISOString().split("T")[0]}</td>
                   <td>{user.rents[index]?.issued}</td>
                 </tr>
               ))
