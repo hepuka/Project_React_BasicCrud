@@ -10,6 +10,8 @@ import {
   Typography,
   styled,
   Button,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
 const Container = styled(FormGroup)`
@@ -20,16 +22,8 @@ const Container = styled(FormGroup)`
   }
 `;
 
-const templateUser = {
-  name: "",
-  username: "",
-  email: "",
-  phone: "",
-  role: "",
-};
-
 const EditUser = () => {
-  const [user, setUser] = useState(templateUser);
+  const [user, setUser] = useState({});
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -95,14 +89,65 @@ const EditUser = () => {
           value={user.phone}
         />
       </FormControl>
-      <FormControl>
+      <FormControl fullWidth margin="normal">
         <InputLabel>Role</InputLabel>
-
-        <Input
-          disabled
-          onChange={(e) => onValueChange(e)}
+        <Select
           name="role"
-          value={user.role}
+          value={user.role?.toLowerCase() || ""}
+          onChange={onValueChange}
+        >
+          <MenuItem value="admin">Admin</MenuItem>
+          <MenuItem value="base">Base</MenuItem>
+          <MenuItem value="manager">Manager</MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControl>
+        <InputLabel>Postcode</InputLabel>
+        <Input
+          onChange={(e) => onValueChange(e)}
+          name="postcode"
+          value={user.postcode}
+        />
+      </FormControl>
+      <FormControl>
+        <InputLabel>City</InputLabel>
+        <Input
+          onChange={(e) => onValueChange(e)}
+          name="city"
+          value={user.city}
+        />
+      </FormControl>
+      <FormControl>
+        <InputLabel>Street</InputLabel>
+        <Input
+          onChange={(e) => onValueChange(e)}
+          name="street"
+          value={user.street}
+        />
+      </FormControl>
+      <FormControl>
+        <InputLabel>Housenumber</InputLabel>
+        <Input
+          onChange={(e) => onValueChange(e)}
+          name="housenumber"
+          value={user.housenumber}
+        />
+      </FormControl>
+      <FormControl>
+        <InputLabel>Floor</InputLabel>
+        <Input
+          onChange={(e) => onValueChange(e)}
+          name="floor"
+          value={user.floor}
+        />
+      </FormControl>
+      <FormControl>
+        <InputLabel>Doornumber</InputLabel>
+        <Input
+          onChange={(e) => onValueChange(e)}
+          name="doornumber"
+          value={user.doornumber}
         />
       </FormControl>
 

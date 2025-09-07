@@ -168,6 +168,14 @@ const BookDetails = () => {
           >
             Mentés
           </Button>
+          <Button
+            color="secondary"
+            variant="outlined"
+            component={Link}
+            to={`/dashboard/${user._id}`}
+          >
+            Felhasználói adatok módosítása
+          </Button>
 
           <Button variant="outlined" onClick={() => setShowRentForm(false)}>
             Mégse

@@ -4,7 +4,7 @@ const URL = "http://localhost:8000";
 
 export const addUser = async (data) => {
   try {
-    return await axios.post(`${URL}/add`, data);
+    return await axios.post(`${URL}/user/add`, data);
   } catch (error) {
     console.error("Error while calling add User API", error);
   }
@@ -12,7 +12,7 @@ export const addUser = async (data) => {
 
 export const getUsers = async () => {
   try {
-    return await axios.get(`${URL}/all`);
+    return await axios.get(`${URL}/user/all`);
   } catch (error) {
     console.error("Error while calling getUsers API", error);
     return null;
@@ -21,7 +21,7 @@ export const getUsers = async () => {
 
 export const getUser = async (id) => {
   try {
-    return await axios.get(`${URL}/${id}`);
+    return await axios.get(`${URL}/user/${id}`);
   } catch (error) {
     console.error("Error while calling getUser API", error);
   }
@@ -29,7 +29,7 @@ export const getUser = async (id) => {
 
 export const editUser = async (user, id) => {
   try {
-    return await axios.put(`${URL}/${id}`, user);
+    return await axios.put(`${URL}/user/${id}`, user);
   } catch (error) {
     console.error("Error while calling editUser API", error);
   }

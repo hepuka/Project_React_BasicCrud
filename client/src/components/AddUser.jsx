@@ -11,6 +11,8 @@ import {
   Typography,
   styled,
   Button,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
 const Container = styled(FormGroup)`
@@ -21,18 +23,8 @@ const Container = styled(FormGroup)`
   }
 `;
 
-const templateUser = {
-  name: "",
-  username: "",
-  email: "",
-  phone: "",
-  role: "",
-  password: "",
-  repassword: "",
-};
-
 const AddUser = () => {
-  const [user, setUser] = useState(templateUser);
+  const [user, setUser] = useState({});
 
   const navigate = useNavigate();
 
@@ -93,9 +85,17 @@ const AddUser = () => {
         <Input type="number" onChange={(e) => onValueChange(e)} name="phone" />
       </FormControl>
 
-      <FormControl>
+      <FormControl fullWidth margin="normal">
         <InputLabel>Role</InputLabel>
-        <Input type="text" onChange={(e) => onValueChange(e)} name="role" />
+        <Select
+          name="role"
+          value={user.role || ""}
+          onChange={(e) => onValueChange(e)}
+        >
+          <MenuItem value="admin">Admin</MenuItem>
+          <MenuItem value="base">Base</MenuItem>
+          <MenuItem value="manager">Manager</MenuItem>
+        </Select>
       </FormControl>
 
       <FormControl>
