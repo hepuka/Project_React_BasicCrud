@@ -129,27 +129,13 @@ const BookDetails = () => {
       <p>{book.isbn}</p>
       <p>Státusz: {book.status}</p>
 
-      <Button
-        variant="contained"
-        onClick={() => setShowRentForm(true)}
-        disabled={book.status === "issued"}
-      >
-        Kölcsönöz
+      <Button variant="contained" onClick={() => setShowRentForm(true)}>
+        {book.status === "issued" ? "Visszavétel" : "Kölcsönöz"}
       </Button>
 
       {showRentForm && (
         <div style={{ marginTop: "20px" }}>
           <h1>Kölcsönző adatai</h1>
-
-          <FormControl fullWidth margin="normal">
-            <InputLabel>Kölcsönzés dátuma</InputLabel>
-            <Input
-              disabled
-              type="text"
-              name="startdate"
-              value={rent.startdate}
-            />
-          </FormControl>
 
           <FormControl fullWidth margin="normal">
             <InputLabel>Kölcsönzés ideje (hét)</InputLabel>
@@ -164,6 +150,16 @@ const BookDetails = () => {
                 </MenuItem>
               ))}
             </Select>
+          </FormControl>
+
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Kölcsönzés kezdete</InputLabel>
+            <Input
+              disabled
+              type="text"
+              name="startdate"
+              value={rent.startdate}
+            />
           </FormControl>
 
           <FormControl fullWidth margin="normal">
