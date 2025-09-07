@@ -90,16 +90,23 @@ const BookDetails = () => {
   };
 
   const getRentedBook = async () => {
-    const updatedBook = { ...book, status: "available" };
-    await editBook(updatedBook, book._id);
-    setBook(updatedBook);
+    try {
+      const updatedBook = { ...book, status: "available" };
+      await editBook(updatedBook, book._id);
+      setBook(updatedBook);
 
-    await axios.put(`http://localhost:8000/user/${user._id}/return`, {
-      bookid: book._id,
-    });
-
-    alert("Book status updated!");
-    navigate("/dashboard/searchbook");
+      await axios.put(`http://localhost:8000/user/${user._id}/return`, {
+        bookid: book._id,
+      });
+      alert("Book returned successfully and rent updated!");
+      navigate("/dashboard/searchbook");
+    } catch (error) {
+      console.error(
+        "Error while returning book:",
+        error.response?.data || error.message
+      );
+      alert("Failed to return book. Check console for details.");
+    }
   };
 
   return (

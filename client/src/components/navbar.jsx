@@ -26,6 +26,7 @@ const NavBar = () => {
   return (
     <div className="navbar">
       <NavLink to="/dashboard">KUNPAO's LIBRARY MANAGEMENT SYSTEM</NavLink>
+      <NavLink to="/dashboard/profile">My Profile</NavLink>
       <NavLink to="/dashboard/all">All User</NavLink>
       <NavLink to="/dashboard/add">Add User</NavLink>
       <NavLink to="/dashboard/addBook">Add New Book</NavLink>

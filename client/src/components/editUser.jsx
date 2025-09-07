@@ -22,8 +22,16 @@ const Container = styled(FormGroup)`
   }
 `;
 
+const templateUser = {
+  name: "",
+  username: "",
+  email: "",
+  phone: "",
+  role: "",
+};
+
 const EditUser = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(templateUser);
   const { id } = useParams();
 
   const navigate = useNavigate();

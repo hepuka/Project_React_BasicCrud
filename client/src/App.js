@@ -12,6 +12,7 @@ import AddnewBook from "./components/AddnewBook.jsx";
 import SearchBook from "./components/SearchBook.jsx";
 import BookDetails from "./components/BookDetails.jsx";
 import EditBook from "./components/EditBook.jsx";
+import MyProfile from "./components/MyProfile.jsx";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="book/:id" element={<BookDetails />} />
           <Route path="book/edit/:id" element={<EditBook />} />
           <Route path="reset" element={<PasswordReset />} />
+          <Route path="profile" element={<MyProfile />} />
         </Route>
       </Routes>
     </BrowserRouter>

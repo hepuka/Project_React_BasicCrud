@@ -1,6 +1,14 @@
 import mongoose from "mongoose";
 import autoIncrement from "mongoose-auto-increment";
 
+const rentSchema = new mongoose.Schema({
+  bookid: { type: Number, required: true },
+  startdate: { type: String },
+  enddate: { type: String },
+  issuedays: { type: Number },
+  issued: { type: String, default: "Kölcsönözve" },
+});
+
 const userSchema = mongoose.Schema({
   name: { type: String, required: true },
   username: { type: String, required: true },
@@ -15,7 +23,7 @@ const userSchema = mongoose.Schema({
   housenumber: { type: Number, required: true },
   floor: { type: Number, required: true },
   doornumber: { type: Number, required: true },
-  rents: { type: Array },
+  rents: [rentSchema],
 });
 
 autoIncrement.initialize(mongoose.connection);

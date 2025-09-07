@@ -85,24 +85,23 @@ export const changePassword = async (req, res) => {
     res.status(500).json({ message: "Error updating password", error });
   }
 };
+
 export const returnBook = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { bookid } = req.body; // bookid sent as-is (string or number)
+    const { bookid } = req.body;
 
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // Find the rent that matches the bookid
     const rent = user.rents.find(
-      (r) => r.bookid === bookid || r.bookid.toString() === bookid.toString()
+      (r) => r.bookid.toString() === bookid.toString()
     );
-    if (!rent)
-      return res.status(404).json({ message: "Rent not found for this book" });
 
-    // Update rent status
+    console.log(rent);
+    if (!rent) return res.status(404).json({ message: "Rent not found" });
+
     rent.issued = "Visszaadva";
-
     user.markModified("rents");
     await user.save();
 
