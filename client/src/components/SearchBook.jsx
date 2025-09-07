@@ -147,14 +147,14 @@ const SearchBook = () => {
                   <td className="border border-gray-400 px-2 py-1">
                     {book.category}
                   </td>
-                  <td className="border border-gray-400 px-2 py-1">
+                  <td className="border border-gray-400 px-2 py-1 ">
                     {book.status}
                   </td>
-                  <td className="border border-gray-400 px-2 py-1 text-center">
+                  <td className="border border-gray-400 px-2 py-1">
                     <Button
                       color="secondary"
                       variant="outlined"
-                      style={{ marginRight: 15 }}
+                      style={{ marginRight: 10 }}
                       component={Link}
                       to={`/dashboard/book/${book._id}`}
                     >
@@ -163,7 +163,7 @@ const SearchBook = () => {
                     <Button
                       color="primary"
                       variant="outlined"
-                      style={{ marginRight: 15 }}
+                      style={{ marginRight: 10 }}
                       component={Link}
                       to={`/dashboard/book/edit/${book._id}`}
                     >
