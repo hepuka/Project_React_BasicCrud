@@ -116,6 +116,43 @@ const AddUser = () => {
           name="repassword"
         />
       </FormControl>
+      <FormControl>
+        <InputLabel>Irányítószám</InputLabel>
+        <Input
+          type="number"
+          onChange={(e) => onValueChange(e)}
+          name="postcode"
+        />
+      </FormControl>
+      <FormControl>
+        <InputLabel>Település</InputLabel>
+        <Input type="text" onChange={(e) => onValueChange(e)} name="city" />
+      </FormControl>
+      <FormControl>
+        <InputLabel>Utca</InputLabel>
+        <Input type="text" onChange={(e) => onValueChange(e)} name="street" />
+      </FormControl>
+
+      <FormControl>
+        <InputLabel>Házszám</InputLabel>
+        <Input
+          type="number"
+          onChange={(e) => onValueChange(e)}
+          name="housenumber"
+        />
+      </FormControl>
+      <FormControl>
+        <InputLabel>Emelet</InputLabel>
+        <Input type="number" onChange={(e) => onValueChange(e)} name="floor" />
+      </FormControl>
+      <FormControl>
+        <InputLabel>Ajtószám</InputLabel>
+        <Input
+          type="number"
+          onChange={(e) => onValueChange(e)}
+          name="doornumber"
+        />
+      </FormControl>
 
       <FormControl>
         <Button variant="contained" onClick={() => addUserDetails()}>

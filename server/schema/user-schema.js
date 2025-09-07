@@ -9,6 +9,12 @@ const userSchema = mongoose.Schema({
   role: { type: String, required: true },
   password: { type: String, required: true },
   active: { type: Boolean, default: false },
+  postcode: { type: Number, required: true },
+  city: { type: String, required: true },
+  street: { type: String, required: true },
+  housenumber: { type: Number, required: true },
+  floor: { type: Number, required: true },
+  doornumber: { type: Number, required: true },
 });
 
 autoIncrement.initialize(mongoose.connection);

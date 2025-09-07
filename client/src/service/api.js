@@ -125,3 +125,36 @@ export const deleteBook = async (id) => {
     console.error("Error while calling deleteBook API", error);
   }
 };
+
+export const addRent = async (data) => {
+  try {
+    return await axios.post(`${URL}/rent`, data);
+  } catch (error) {
+    console.error("Error while calling add Rent API", error);
+  }
+};
+
+export const getRents = async () => {
+  try {
+    return await axios.get(`${URL}/rents`);
+  } catch (error) {
+    console.error("Error while calling getRents API", error);
+    return null;
+  }
+};
+
+export const getRent = async (id) => {
+  try {
+    return await axios.get(`${URL}/rent/${id}`);
+  } catch (error) {
+    console.error("Error while calling getRent API", error);
+  }
+};
+
+export const getRentByUser = async (userid) => {
+  try {
+    return await axios.get(`${URL}/rent/user/${userid}`);
+  } catch (error) {
+    console.error("Error while calling getRentByUser API", error);
+  }
+};

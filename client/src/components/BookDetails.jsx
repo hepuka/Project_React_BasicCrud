@@ -1,98 +1,162 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getBook } from "../service/api";
+import { getBook, addRent, editBook } from "../service/api";
 import {
-  FormGroup,
+  Button,
   FormControl,
   InputLabel,
   Input,
-  Typography,
-  styled,
-  Button,
   Select,
   MenuItem,
 } from "@mui/material";
+import axios from "axios";
 
-const templateBook = {
-  name: "",
-  author: "",
-  description: "",
-  price: 0,
-  image: "",
-  category: "",
-  quantity: 0,
-  rating: 0,
-  status: "available",
+const user = localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user"))
+  : null;
+
+const templateRent = {
+  userid: user._id,
+  bookids: [],
+  startdate: "",
+  enddate: "",
+  issued: "Kölcsönözve",
+  issuedays: 0,
 };
 
 const BookDetails = () => {
-  const [book, setBook] = useState(templateBook);
-  const [showBorrower, setShowBorrower] = useState(false);
+  const [book, setBook] = useState({});
+  const [rent, setRent] = useState(templateRent);
+  const [showRentForm, setShowRentForm] = useState(false);
   const { id } = useParams();
-  const user = localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : null;
 
   useEffect(() => {
     loadBookDetails();
   }, []);
 
+  useEffect(() => {
+    if (book._id) {
+      setRent((prev) => ({
+        ...prev,
+        bookids: prev.bookids.includes(book._id)
+          ? prev.bookids
+          : [...prev.bookids, book._id],
+      }));
+    }
+  }, [book._id]);
+
   const loadBookDetails = async () => {
     const response = await getBook(id);
-    setBook(response.data);
-  };
-  const handleBorrowClick = () => {
-    setShowBorrower(true);
+    if (response && response.data) {
+      setBook(response.data);
+    }
   };
 
-  const onValueChange = (e) => {
-    setBook({ ...book, [e.target.name]: e.target.value });
+  const onRentValueChange = (e) => {
+    const { name, value } = e.target;
+
+    setRent((prev) => {
+      let updated = { ...prev, [name]: value };
+
+      if (name === "issuedays") {
+        const start = new Date();
+        const end = new Date(start);
+        end.setDate(start.getDate() + Number(value) * 7);
+
+        updated.startdate = start.toISOString().split("T")[0];
+        updated.enddate = end.toISOString().split("T")[0];
+      }
+
+      return updated;
+    });
+  };
+
+  const addRentDetails = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/rent/user/${rent.userid}`
+      );
+      const existingRent = response.data;
+
+      if (existingRent) {
+        const updatedBookIds = existingRent.bookids.includes(book._id)
+          ? existingRent.bookids
+          : [...existingRent.bookids, book._id];
+
+        const updatedRent = {
+          ...existingRent,
+          bookids: updatedBookIds,
+          startdate: rent.startdate,
+          enddate: rent.enddate,
+          issuedays: rent.issuedays,
+        };
+
+        await axios.put(
+          `http://localhost:8000/rent/${existingRent._id}`,
+          updatedRent
+        );
+      } else {
+        await addRent(rent);
+      }
+
+      const updatedBook = { ...book, status: "issued" };
+      await editBook(updatedBook, book._id);
+      setBook(updatedBook);
+
+      alert("Rent saved and book status updated!");
+      setShowRentForm(false);
+    } catch (err) {
+      console.error(
+        "Error while adding or updating rent:",
+        err.response?.data || err.message
+      );
+      alert("Failed to save rent. Check console for details.");
+    }
   };
 
   return (
     <div>
-      <p>{book.name}</p>
+      <h2>{book.name}</h2>
       <p>{book.author}</p>
       <p>{book.description}</p>
-      <p>{book.price}</p>
-      <p>{book.image}</p>
-      <p>{book.category}</p>
-      <p>{book.quantity}</p>
-      <p>{book.rating}</p>
-      <p>{book.status}</p>
+      <p>Ár: {book.price}</p>
+      <p>Kategória: {book.category}</p>
+      <p>Készlet: {book.quantity}</p>
+      <p>Értékelés: {book.rating}</p>
+      <p>{book.published}</p>
+      <p>{book.language}</p>
+      <p>{book.pages}</p>
+      <p>{book.isbn}</p>
+      <p>Státusz: {book.status}</p>
 
-      <Button variant="contained" onClick={handleBorrowClick}>
+      <Button
+        variant="contained"
+        onClick={() => setShowRentForm(true)}
+        disabled={book.status === "issued"}
+      >
         Kölcsönöz
       </Button>
 
-      {showBorrower && (
-        <div>
-          <h1>Kölcsönzés adatai</h1>
-          <FormControl>
-            <InputLabel>Kölcsönző neve</InputLabel>
-            <Input
-              type="text"
-              onChange={(e) => onValueChange(e)}
-              name="name"
-              value={user.name}
-            />
-          </FormControl>
-          <FormControl>
+      {showRentForm && (
+        <div style={{ marginTop: "20px" }}>
+          <h1>Kölcsönző adatai</h1>
+
+          <FormControl fullWidth margin="normal">
             <InputLabel>Kölcsönzés dátuma</InputLabel>
             <Input
               disabled
               type="text"
-              onChange={(e) => onValueChange(e)}
               name="startdate"
-              value={new Date().toISOString().split("T")[0]}
+              value={rent.startdate}
             />
           </FormControl>
-          <FormControl>
-            <InputLabel>Kölcsönzés ideje(hét)</InputLabel>
+
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Kölcsönzés ideje (hét)</InputLabel>
             <Select
-              onChange={onValueChange}
+              onChange={onRentValueChange}
               name="issuedays"
-              value={book.issuedays || ""}
+              value={rent.issuedays || ""}
             >
               {[2, 4, 6, 8].map((num) => (
                 <MenuItem key={num} value={num}>
@@ -101,85 +165,32 @@ const BookDetails = () => {
               ))}
             </Select>
           </FormControl>
-          <FormControl>
+
+          <FormControl fullWidth margin="normal">
             <InputLabel>Kölcsönzés vége</InputLabel>
-            <Input
-              disabled
-              type="text"
-              name="enddate"
-              value={
-                book.issuedays
-                  ? new Date(
-                      new Date(book.startdate || new Date()).getTime() +
-                        book.issuedays * 7 * 24 * 60 * 60 * 1000
-                    )
-                      .toISOString()
-                      .split("T")[0]
-                  : ""
-              }
-            />
-          </FormControl>
-          <FormControl>
-            <InputLabel>Irányítószám</InputLabel>
-            <Input
-              type="number"
-              onChange={(e) => onValueChange(e)}
-              name="postcode"
-              value={user.postcode || ""}
-            />
-          </FormControl>
-          <FormControl>
-            <InputLabel>Település</InputLabel>
-            <Input
-              type="text"
-              onChange={(e) => onValueChange(e)}
-              name="city"
-              value={user.city || ""}
-            />
-          </FormControl>
-          <FormControl>
-            <InputLabel>Utca</InputLabel>
-            <Input
-              type="text"
-              onChange={(e) => onValueChange(e)}
-              name="street"
-              value={user.street || ""}
-            />
+            <Input disabled type="text" name="enddate" value={rent.enddate} />
           </FormControl>
 
-          <FormControl>
-            <InputLabel>Házszám</InputLabel>
-            <Input
-              type="number"
-              onChange={(e) => onValueChange(e)}
-              name="housenumber"
-              value={user.housenumber || ""}
-            />
-          </FormControl>
-          <FormControl>
-            <InputLabel>Emelet</InputLabel>
-            <Input
-              type="number"
-              onChange={(e) => onValueChange(e)}
-              name="floor"
-              value={user.floor || ""}
-            />
-          </FormControl>
-          <FormControl>
-            <InputLabel>Ajtószám</InputLabel>
-            <Input
-              type="number"
-              onChange={(e) => onValueChange(e)}
-              name="doornumber"
-              value={user.doornumber || ""}
-            />
-          </FormControl>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={addRentDetails}
+            style={{ marginRight: "10px" }}
+          >
+            Mentés
+          </Button>
+
+          <Button variant="outlined" onClick={() => setShowRentForm(false)}>
+            Mégse
+          </Button>
         </div>
       )}
 
-      <Button>
-        <Link to="/dashboard/searchbook">Back</Link>
-      </Button>
+      <div style={{ marginTop: "20px" }}>
+        <Button>
+          <Link to="/dashboard/searchbook">Vissza</Link>
+        </Button>
+      </div>
     </div>
   );
 };
