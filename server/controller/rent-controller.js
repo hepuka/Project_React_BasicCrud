@@ -1,4 +1,5 @@
 import Rent from "../schema/rent-schema.js";
+import User from "../schema/user-schema.js";
 
 export const addRent = async (req, res) => {
   try {
@@ -66,6 +67,34 @@ export const updateRent = async (req, res) => {
     res.status(200).json(updatedRent);
   } catch (error) {
     console.error("UpdateRent Error:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const addOrUpdateRent = async (req, res) => {
+  try {
+    const { userid, bookid, startdate, enddate, issuedays, issued } = req.body;
+
+    const user = await User.findById(userid);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const newRent = {
+      bookid,
+      startdate,
+      enddate,
+      issuedays,
+      issued,
+    };
+
+    user.rents.push(newRent);
+
+    await user.save();
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("addOrUpdateRent Error:", error);
     res.status(500).json({ message: error.message });
   }
 };

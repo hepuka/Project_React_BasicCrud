@@ -100,11 +100,6 @@ const AddnewBook = () => {
     navigate("/dashboard/searchbook");
   };
 
-  const addNewLanguage = async () => {
-    await addLanguage(newLanguage);
-    alert("Language added successfully");
-  };
-
   return (
     <Container>
       <Typography variant="h4">Add Book</Typography>

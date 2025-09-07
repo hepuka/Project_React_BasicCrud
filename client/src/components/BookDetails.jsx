@@ -11,13 +11,8 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-const user = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
-  : null;
-
 const templateRent = {
-  userid: user._id,
-  bookids: [],
+  bookid: 0,
   startdate: "",
   enddate: "",
   issued: "Kölcsönözve",
@@ -31,20 +26,13 @@ const BookDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const user = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
+
   useEffect(() => {
     loadBookDetails();
   }, []);
-
-  useEffect(() => {
-    if (book._id) {
-      setRent((prev) => ({
-        ...prev,
-        bookids: prev.bookids.includes(book._id)
-          ? prev.bookids
-          : [...prev.bookids, book._id],
-      }));
-    }
-  }, [book._id]);
 
   const loadBookDetails = async () => {
     const response = await getBook(id);
@@ -74,41 +62,27 @@ const BookDetails = () => {
 
   const addRentDetails = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/rent/user/${rent.userid}`
-      );
-      const existingRent = response.data;
+      const rentPayload = {
+        userid: user._id,
+        bookid: book._id,
+        startdate: rent.startdate,
+        enddate: rent.enddate,
+        issuedays: rent.issuedays,
+        issued: "Kölcsönözve",
+      };
 
-      if (existingRent) {
-        const updatedBookIds = existingRent.bookids.includes(book._id)
-          ? existingRent.bookids
-          : [...existingRent.bookids, book._id];
-
-        const updatedRent = {
-          ...existingRent,
-          bookids: updatedBookIds,
-          startdate: rent.startdate,
-          enddate: rent.enddate,
-          issuedays: rent.issuedays,
-        };
-
-        await axios.put(
-          `http://localhost:8000/rent/${existingRent._id}`,
-          updatedRent
-        );
-      } else {
-        await addRent(rent);
-      }
+      await axios.post("http://localhost:8000/user/rent", rentPayload);
 
       const updatedBook = { ...book, status: "issued" };
       await editBook(updatedBook, book._id);
       setBook(updatedBook);
 
-      alert("Rent saved and book status updated!");
+      alert("Rent saved inside user and book status updated!");
       setShowRentForm(false);
+      navigate("/dashboard/searchbook");
     } catch (err) {
       console.error(
-        "Error while adding or updating rent:",
+        "Error while saving rent:",
         err.response?.data || err.message
       );
       alert("Failed to save rent. Check console for details.");

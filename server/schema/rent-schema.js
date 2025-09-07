@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import autoIncrement from "mongoose-auto-increment";
 
 const rentSchema = mongoose.Schema({
-  userid: { type: Number, required: true },
   bookids: { type: Array, required: true },
   startdate: { type: String, required: true },
   enddate: { type: String, required: true },

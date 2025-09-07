@@ -7,6 +7,7 @@ import {
   deleteUser,
   changePassword,
 } from "../controller/user-controller.js";
+
 import {
   addBook,
   addLanguage,
@@ -26,6 +27,7 @@ import {
   getRents,
   getRent,
   updateRent,
+  addOrUpdateRent,
 } from "../controller/rent-controller.js";
 
 const router = express.Router();
@@ -44,7 +46,7 @@ router.post("/books/search", searchBooks);
 router.get("/books", getBooks);
 router.post("/rent", addRent);
 router.get("/rents", getRents);
-
+router.post("/user/rent", addOrUpdateRent);
 router.get("/:id", getUser);
 router.put("/:id", editUser);
 router.delete("/:id", deleteUser);

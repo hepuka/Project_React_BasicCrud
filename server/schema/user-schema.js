@@ -15,6 +15,7 @@ const userSchema = mongoose.Schema({
   housenumber: { type: Number, required: true },
   floor: { type: Number, required: true },
   doornumber: { type: Number, required: true },
+  rents: { type: Array },
 });
 
 autoIncrement.initialize(mongoose.connection);
