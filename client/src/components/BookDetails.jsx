@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getBook, addRent, editBook } from "../service/api";
 import {
   Button,
@@ -29,6 +29,7 @@ const BookDetails = () => {
   const [rent, setRent] = useState(templateRent);
   const [showRentForm, setShowRentForm] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadBookDetails();
@@ -119,6 +120,7 @@ const BookDetails = () => {
     await editBook(updatedBook, book._id);
     setBook(updatedBook);
     alert("Book status updated!");
+    navigate("/dashboard/searchbook");
   };
 
   return (
