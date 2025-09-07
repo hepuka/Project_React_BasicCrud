@@ -114,6 +114,13 @@ const BookDetails = () => {
     }
   };
 
+  const getRentedBook = async () => {
+    const updatedBook = { ...book, status: "available" };
+    await editBook(updatedBook, book._id);
+    setBook(updatedBook);
+    alert("Book status updated!");
+  };
+
   return (
     <div>
       <h2>{book.name}</h2>
@@ -129,7 +136,12 @@ const BookDetails = () => {
       <p>{book.isbn}</p>
       <p>Státusz: {book.status}</p>
 
-      <Button variant="contained" onClick={() => setShowRentForm(true)}>
+      <Button
+        variant="contained"
+        onClick={() =>
+          book.status === "issued" ? getRentedBook() : setShowRentForm(true)
+        }
+      >
         {book.status === "issued" ? "Visszavétel" : "Kölcsönöz"}
       </Button>
 
