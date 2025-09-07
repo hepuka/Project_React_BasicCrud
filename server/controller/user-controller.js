@@ -98,7 +98,6 @@ export const returnBook = async (req, res) => {
       (r) => r.bookid.toString() === bookid.toString()
     );
 
-    console.log(rent);
     if (!rent) return res.status(404).json({ message: "Rent not found" });
 
     rent.issued = "Visszaadva";
