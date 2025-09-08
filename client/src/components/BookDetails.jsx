@@ -69,11 +69,12 @@ const BookDetails = () => {
         enddate: rent.enddate,
         issuedays: rent.issuedays,
         issued: "Kölcsönözve",
+        rentedBy: user._id,
       };
 
       await axios.post("http://localhost:8000/user/rent", rentPayload);
 
-      const updatedBook = { ...book, status: "issued" };
+      const updatedBook = { ...book, status: "issued", rentedBy: user._id };
       await editBook(updatedBook, book._id);
       setBook(updatedBook);
 
@@ -91,7 +92,7 @@ const BookDetails = () => {
 
   const getRentedBook = async () => {
     try {
-      const updatedBook = { ...book, status: "available" };
+      const updatedBook = { ...book, status: "available", rentedBy: null };
       await editBook(updatedBook, book._id);
       setBook(updatedBook);
 
@@ -124,7 +125,7 @@ const BookDetails = () => {
       <p>{book.isbn}</p>
       <p>Státusz: {book.status}</p>
 
-      {user.role === "basic" && showRentForm && (
+      {book.rentedBy === user?._id && (
         <>
           <Button
             variant="contained"
@@ -132,62 +133,70 @@ const BookDetails = () => {
               book.status === "issued" ? getRentedBook() : setShowRentForm(true)
             }
           >
-            {book.status === "issued" ? "Visszavétel" : "Kölcsönöz"}
+            {book.status === "issued" ? "Visszaad" : "Kölcsönöz"}
           </Button>
-          <div style={{ marginTop: "20px" }}>
-            <h1>Kölcsönző adatai</h1>
 
-            <FormControl fullWidth margin="normal">
-              <InputLabel>Kölcsönzés ideje (hét)</InputLabel>
-              <Select
-                onChange={onRentValueChange}
-                name="issuedays"
-                value={rent.issuedays || ""}
+          {showRentForm && book.status === "available" && (
+            <div style={{ marginTop: "20px" }}>
+              <h1>Kölcsönző adatai</h1>
+
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Kölcsönzés ideje (hét)</InputLabel>
+                <Select
+                  onChange={onRentValueChange}
+                  name="issuedays"
+                  value={rent.issuedays || ""}
+                >
+                  {[2, 4, 6, 8].map((num) => (
+                    <MenuItem key={num} value={num}>
+                      {num}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Kölcsönzés kezdete</InputLabel>
+                <Input
+                  disabled
+                  type="text"
+                  name="startdate"
+                  value={rent.startdate}
+                />
+              </FormControl>
+
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Kölcsönzés vége</InputLabel>
+                <Input
+                  disabled
+                  type="text"
+                  name="enddate"
+                  value={rent.enddate}
+                />
+              </FormControl>
+
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={addRentDetails}
+                style={{ marginRight: "10px" }}
               >
-                {[2, 4, 6, 8].map((num) => (
-                  <MenuItem key={num} value={num}>
-                    {num}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                Mentés
+              </Button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                component={Link}
+                to={`/dashboard/${user._id}`}
+              >
+                Felhasználói adatok módosítása
+              </Button>
 
-            <FormControl fullWidth margin="normal">
-              <InputLabel>Kölcsönzés kezdete</InputLabel>
-              <Input
-                disabled
-                type="text"
-                name="startdate"
-                value={rent.startdate}
-              />
-            </FormControl>
-
-            <FormControl fullWidth margin="normal">
-              <InputLabel>Kölcsönzés vége</InputLabel>
-              <Input disabled type="text" name="enddate" value={rent.enddate} />
-            </FormControl>
-
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={addRentDetails}
-              style={{ marginRight: "10px" }}
-            >
-              Mentés
-            </Button>
-            <Button
-              color="secondary"
-              variant="outlined"
-              component={Link}
-              to={`/dashboard/${user._id}`}
-            >
-              Felhasználói adatok módosítása
-            </Button>
-
-            <Button variant="outlined" onClick={() => setShowRentForm(false)}>
-              Mégse
-            </Button>
-          </div>
+              <Button variant="outlined" onClick={() => setShowRentForm(false)}>
+                Mégse
+              </Button>
+            </div>
+          )}
         </>
       )}
 

@@ -34,14 +34,13 @@ const NavBar = () => {
       {user.role === "basic" && (
         <NavLink to="/dashboard/profile">My Profile</NavLink>
       )}
-
+      <NavLink to="/dashboard/searchbook">Search Book</NavLink>
       {user.role === "admin" && (
         <>
           <NavLink to="/dashboard/addBook">Add New Book</NavLink>
           <NavLink to="/dashboard/all">All User</NavLink>
           <NavLink to="/dashboard/add">Add User</NavLink>
           <NavLink to="/dashboard/addBook">Add New Book</NavLink>
-          <NavLink to="/dashboard/searchbook">Search Book</NavLink>
         </>
       )}
 

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getBook, getUser } from "../service/api";
+import { Button } from "@mui/material";
 
 const MyProfile = () => {
   const [user, setUser] = useState({});
@@ -33,7 +34,7 @@ const MyProfile = () => {
       console.error("Failed to load user details:", error);
     }
   };
-
+  console.log(books);
   return (
     <>
       <div>
@@ -61,6 +62,7 @@ const MyProfile = () => {
               <th>End Date</th>
               <th>Visszahozva</th>
               <th>Státusz</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -75,6 +77,16 @@ const MyProfile = () => {
                   <td>{user.rents[index]?.enddate}</td>
                   <td>{new Date().toISOString().split("T")[0]}</td>
                   <td>{user.rents[index]?.issued}</td>
+                  <td>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => navigate(`/dashboard/book/${book._id}`)}
+                      disabled={book.issued === "Visszaadva"}
+                    >
+                      Visszaad
+                    </Button>
+                  </td>
                 </tr>
               ))
             ) : (
