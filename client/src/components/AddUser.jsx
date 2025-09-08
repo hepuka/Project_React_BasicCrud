@@ -103,7 +103,7 @@ const AddUser = () => {
           onChange={(e) => onValueChange(e)}
         >
           <MenuItem value="admin">Admin</MenuItem>
-          <MenuItem value="base">Base</MenuItem>
+          <MenuItem value="basic">Basic</MenuItem>
           <MenuItem value="manager">Manager</MenuItem>
         </Select>
       </FormControl>

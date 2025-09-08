@@ -14,6 +14,7 @@ const SearchBook = () => {
     author: "",
     year: "",
     category: "",
+    status: "",
   });
 
   const [results, setResults] = useState([]);
@@ -50,6 +51,8 @@ const SearchBook = () => {
     await deleteBook(id);
     getAllBooks();
   };
+
+  console.log(results);
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">Search Books</h2>
@@ -90,6 +93,16 @@ const SearchBook = () => {
               {cat.name}
             </option>
           ))}
+        </select>
+        <select
+          name="status"
+          value={filters.status}
+          onChange={handleChange}
+          className="border p-2 rounded"
+        >
+          <option value="">All Status</option>
+          <option value="available">Available</option>
+          <option value="issued">Issued</option>
         </select>
       </div>
       <button
@@ -145,7 +158,7 @@ const SearchBook = () => {
                     {book.published}
                   </td>
                   <td className="border border-gray-400 px-2 py-1">
-                    {book.category}
+                    {book.category?.name || book.category || "N/A"}
                   </td>
                   <td className="border border-gray-400 px-2 py-1 ">
                     {book.status}
