@@ -30,6 +30,7 @@ const NavBar = () => {
   return (
     <div className="navbar">
       <NavLink to="/dashboard">KUNPAO's LIBRARY MANAGEMENT SYSTEM</NavLink>
+
       {user.role === "basic" && (
         <NavLink to="/dashboard/profile">My Profile</NavLink>
       )}

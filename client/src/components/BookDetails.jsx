@@ -124,70 +124,71 @@ const BookDetails = () => {
       <p>{book.isbn}</p>
       <p>Státusz: {book.status}</p>
 
-      <Button
-        variant="contained"
-        onClick={() =>
-          book.status === "issued" ? getRentedBook() : setShowRentForm(true)
-        }
-      >
-        {book.status === "issued" ? "Visszavétel" : "Kölcsönöz"}
-      </Button>
-
-      {showRentForm && (
-        <div style={{ marginTop: "20px" }}>
-          <h1>Kölcsönző adatai</h1>
-
-          <FormControl fullWidth margin="normal">
-            <InputLabel>Kölcsönzés ideje (hét)</InputLabel>
-            <Select
-              onChange={onRentValueChange}
-              name="issuedays"
-              value={rent.issuedays || ""}
-            >
-              {[2, 4, 6, 8].map((num) => (
-                <MenuItem key={num} value={num}>
-                  {num}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-
-          <FormControl fullWidth margin="normal">
-            <InputLabel>Kölcsönzés kezdete</InputLabel>
-            <Input
-              disabled
-              type="text"
-              name="startdate"
-              value={rent.startdate}
-            />
-          </FormControl>
-
-          <FormControl fullWidth margin="normal">
-            <InputLabel>Kölcsönzés vége</InputLabel>
-            <Input disabled type="text" name="enddate" value={rent.enddate} />
-          </FormControl>
-
+      {user.role === "basic" && showRentForm && (
+        <>
           <Button
             variant="contained"
-            color="primary"
-            onClick={addRentDetails}
-            style={{ marginRight: "10px" }}
+            onClick={() =>
+              book.status === "issued" ? getRentedBook() : setShowRentForm(true)
+            }
           >
-            Mentés
+            {book.status === "issued" ? "Visszavétel" : "Kölcsönöz"}
           </Button>
-          <Button
-            color="secondary"
-            variant="outlined"
-            component={Link}
-            to={`/dashboard/${user._id}`}
-          >
-            Felhasználói adatok módosítása
-          </Button>
+          <div style={{ marginTop: "20px" }}>
+            <h1>Kölcsönző adatai</h1>
 
-          <Button variant="outlined" onClick={() => setShowRentForm(false)}>
-            Mégse
-          </Button>
-        </div>
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Kölcsönzés ideje (hét)</InputLabel>
+              <Select
+                onChange={onRentValueChange}
+                name="issuedays"
+                value={rent.issuedays || ""}
+              >
+                {[2, 4, 6, 8].map((num) => (
+                  <MenuItem key={num} value={num}>
+                    {num}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Kölcsönzés kezdete</InputLabel>
+              <Input
+                disabled
+                type="text"
+                name="startdate"
+                value={rent.startdate}
+              />
+            </FormControl>
+
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Kölcsönzés vége</InputLabel>
+              <Input disabled type="text" name="enddate" value={rent.enddate} />
+            </FormControl>
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={addRentDetails}
+              style={{ marginRight: "10px" }}
+            >
+              Mentés
+            </Button>
+            <Button
+              color="secondary"
+              variant="outlined"
+              component={Link}
+              to={`/dashboard/${user._id}`}
+            >
+              Felhasználói adatok módosítása
+            </Button>
+
+            <Button variant="outlined" onClick={() => setShowRentForm(false)}>
+              Mégse
+            </Button>
+          </div>
+        </>
       )}
 
       <div style={{ marginTop: "20px" }}>
