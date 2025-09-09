@@ -27,7 +27,16 @@ const Login = () => {
       const { user } = response.data;
 
       const token = Math.random().toString(36).substr(2);
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          username: user.username,
+        })
+      );
       localStorage.setItem("token", token);
 
       navigate("/dashboard");

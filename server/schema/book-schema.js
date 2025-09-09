@@ -15,7 +15,7 @@ const bookSchema = mongoose.Schema({
   isbn: { type: Number, required: true },
   rating: { type: Number, required: true },
   status: { type: String, required: true },
-  rentedBy: { type: Number, required: true },
+  rentedBy: { type: Number },
 });
 
 autoIncrement.initialize(mongoose.connection);

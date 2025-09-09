@@ -59,22 +59,26 @@ const BookDetails = () => {
       return updated;
     });
   };
-
+  console.log(user);
   const addRentDetails = async () => {
     try {
       const rentPayload = {
-        userid: user._id,
+        userid: user.id,
         bookid: book._id,
         startdate: rent.startdate,
         enddate: rent.enddate,
         issuedays: rent.issuedays,
         issued: "Kölcsönözve",
-        rentedBy: user._id,
+        rentedBy: user.id || 0,
       };
 
       await axios.post("http://localhost:8000/user/rent", rentPayload);
 
-      const updatedBook = { ...book, status: "issued", rentedBy: user._id };
+      const updatedBook = {
+        ...book,
+        status: "Kölcsönözve",
+        rentedBy: user.id,
+      };
       await editBook(updatedBook, book._id);
       setBook(updatedBook);
 
@@ -96,7 +100,7 @@ const BookDetails = () => {
       await editBook(updatedBook, book._id);
       setBook(updatedBook);
 
-      await axios.put(`http://localhost:8000/user/${user._id}/return`, {
+      await axios.put(`http://localhost:8000/user/${user.id}/return`, {
         bookid: book._id,
       });
       alert("Book returned successfully and rent updated!");
@@ -109,7 +113,7 @@ const BookDetails = () => {
       alert("Failed to return book. Check console for details.");
     }
   };
-
+  console.log(book);
   return (
     <div>
       <h2>{book.name}</h2>
@@ -125,79 +129,81 @@ const BookDetails = () => {
       <p>{book.isbn}</p>
       <p>Státusz: {book.status}</p>
 
-      {book.rentedBy === user?._id && (
-        <>
-          <Button
-            variant="contained"
-            onClick={() =>
-              book.status === "issued" ? getRentedBook() : setShowRentForm(true)
-            }
-          >
-            {book.status === "issued" ? "Visszaad" : "Kölcsönöz"}
-          </Button>
+      <>
+        <Button
+          variant="contained"
+          onClick={() => setShowRentForm(!showRentForm)}
+        >
+          Kölcsönöz
+        </Button>
 
-          {showRentForm && book.status === "available" && (
-            <div style={{ marginTop: "20px" }}>
-              <h1>Kölcsönző adatai</h1>
+        {showRentForm && (
+          <div style={{ marginTop: "20px" }}>
+            <h1>Kölcsönző adatai</h1>
 
-              <FormControl fullWidth margin="normal">
-                <InputLabel>Kölcsönzés ideje (hét)</InputLabel>
-                <Select
-                  onChange={onRentValueChange}
-                  name="issuedays"
-                  value={rent.issuedays || ""}
-                >
-                  {[2, 4, 6, 8].map((num) => (
-                    <MenuItem key={num} value={num}>
-                      {num}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-
-              <FormControl fullWidth margin="normal">
-                <InputLabel>Kölcsönzés kezdete</InputLabel>
-                <Input
-                  disabled
-                  type="text"
-                  name="startdate"
-                  value={rent.startdate}
-                />
-              </FormControl>
-
-              <FormControl fullWidth margin="normal">
-                <InputLabel>Kölcsönzés vége</InputLabel>
-                <Input
-                  disabled
-                  type="text"
-                  name="enddate"
-                  value={rent.enddate}
-                />
-              </FormControl>
-
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={addRentDetails}
-                style={{ marginRight: "10px" }}
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Kölcsönzés ideje (hét)</InputLabel>
+              <Select
+                onChange={onRentValueChange}
+                name="issuedays"
+                value={rent.issuedays || ""}
               >
-                Mentés
-              </Button>
-              <Button
-                color="secondary"
-                variant="outlined"
-                component={Link}
-                to={`/dashboard/${user._id}`}
-              >
-                Felhasználói adatok módosítása
-              </Button>
+                {[2, 4, 6, 8].map((num) => (
+                  <MenuItem key={num} value={num}>
+                    {num}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
-              <Button variant="outlined" onClick={() => setShowRentForm(false)}>
-                Mégse
-              </Button>
-            </div>
-          )}
-        </>
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Kölcsönzés kezdete</InputLabel>
+              <Input
+                disabled
+                type="text"
+                name="startdate"
+                value={rent.startdate}
+              />
+            </FormControl>
+
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Kölcsönzés vége</InputLabel>
+              <Input disabled type="text" name="enddate" value={rent.enddate} />
+            </FormControl>
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={addRentDetails}
+              style={{ marginRight: "10px" }}
+            >
+              Mentés
+            </Button>
+            <Button
+              color="secondary"
+              variant="outlined"
+              component={Link}
+              to={`/dashboard/${user.id}`}
+            >
+              Felhasználói adatok módosítása
+            </Button>
+
+            <Button variant="outlined" onClick={() => setShowRentForm(false)}>
+              Mégse
+            </Button>
+          </div>
+        )}
+      </>
+
+      {user.id === book.rentedBy && (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={getRentedBook}
+          style={{ marginTop: "20px" }}
+        >
+          Visszaad
+        </Button>
       )}
 
       <div style={{ marginTop: "20px" }}>

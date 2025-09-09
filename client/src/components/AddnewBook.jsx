@@ -37,7 +37,7 @@ const templateBook = {
   category: "",
   quantity: 0,
   rating: 0,
-  status: "available",
+  status: "elérhető",
 };
 
 const AddnewBook = () => {

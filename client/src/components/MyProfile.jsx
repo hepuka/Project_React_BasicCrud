@@ -62,13 +62,15 @@ const MyProfile = () => {
               <th>End Date</th>
               <th>Visszahozva</th>
               <th>Státusz</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {books.length > 0 ? (
               books.map((book, index) => (
-                <tr key={index}>
+                <tr
+                  key={index}
+                  onClick={() => navigate(`/dashboard/book/${book._id}`)}
+                >
                   <td>{book.name}</td>
                   <td>{book.author}</td>
                   <td>{book.category}</td>
@@ -77,16 +79,6 @@ const MyProfile = () => {
                   <td>{user.rents[index]?.enddate}</td>
                   <td>{new Date().toISOString().split("T")[0]}</td>
                   <td>{user.rents[index]?.issued}</td>
-                  <td>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      onClick={() => navigate(`/dashboard/book/${book._id}`)}
-                      disabled={book.issued === "Visszaadva"}
-                    >
-                      Visszaad
-                    </Button>
-                  </td>
                 </tr>
               ))
             ) : (
