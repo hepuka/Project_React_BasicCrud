@@ -93,14 +93,13 @@ const BookDetails = () => {
 
   const getRentedBook = async () => {
     try {
-      const updatedBook = { ...book, status: "elérhető", rentedBy: null };
-      await editBook(updatedBook, book._id);
-      setBook(updatedBook);
-
       await axios.put(`http://localhost:8000/user/${user.id}/return`, {
         bookid: book._id,
       });
       alert("Book returned successfully and rent updated!");
+      const updatedBook = { ...book, status: "elérhető", rentedBy: null };
+      await editBook(updatedBook, book._id);
+      setBook(updatedBook);
       navigate("/dashboard/searchbook");
     } catch (error) {
       console.error(
