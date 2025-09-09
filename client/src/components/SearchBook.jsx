@@ -19,6 +19,9 @@ const SearchBook = () => {
 
   const [results, setResults] = useState([]);
   const [categories, setCategories] = useState([]);
+  const user = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -172,22 +175,27 @@ const SearchBook = () => {
                     >
                       Profile
                     </Button>
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      style={{ marginRight: 10 }}
-                      component={Link}
-                      to={`/dashboard/book/edit/${book._id}`}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      color="error"
-                      variant="outlined"
-                      onClick={() => deleteBookData(book._id)}
-                    >
-                      Delete
-                    </Button>
+
+                    {user.role === "admin" && (
+                      <>
+                        <Button
+                          color="primary"
+                          variant="outlined"
+                          style={{ marginRight: 10 }}
+                          component={Link}
+                          to={`/dashboard/book/edit/${book._id}`}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          color="error"
+                          variant="outlined"
+                          onClick={() => deleteBookData(book._id)}
+                        >
+                          Delete
+                        </Button>
+                      </>
+                    )}
                   </td>
                 </tr>
               ))}

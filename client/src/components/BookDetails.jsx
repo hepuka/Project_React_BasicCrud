@@ -59,7 +59,7 @@ const BookDetails = () => {
       return updated;
     });
   };
-  console.log(user);
+
   const addRentDetails = async () => {
     try {
       const rentPayload = {
@@ -96,7 +96,7 @@ const BookDetails = () => {
 
   const getRentedBook = async () => {
     try {
-      const updatedBook = { ...book, status: "available", rentedBy: null };
+      const updatedBook = { ...book, status: "elérhető", rentedBy: null };
       await editBook(updatedBook, book._id);
       setBook(updatedBook);
 
@@ -113,7 +113,7 @@ const BookDetails = () => {
       alert("Failed to return book. Check console for details.");
     }
   };
-  console.log(book);
+
   return (
     <div>
       <h2>{book.name}</h2>
@@ -130,12 +130,14 @@ const BookDetails = () => {
       <p>Státusz: {book.status}</p>
 
       <>
-        <Button
-          variant="contained"
-          onClick={() => setShowRentForm(!showRentForm)}
-        >
-          Kölcsönöz
-        </Button>
+        {book.status === "elérhető" && (
+          <Button
+            variant="contained"
+            onClick={() => setShowRentForm(!showRentForm)}
+          >
+            Kölcsönöz
+          </Button>
+        )}
 
         {showRentForm && (
           <div style={{ marginTop: "20px" }}>
