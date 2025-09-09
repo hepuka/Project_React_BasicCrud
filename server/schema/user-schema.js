@@ -5,8 +5,7 @@ const rentSchema = new mongoose.Schema({
   bookid: { type: Number, required: true },
   startdate: { type: String },
   enddate: { type: String },
-  issuedays: { type: Number },
-  issued: { type: String, default: "Kölcsönözve" },
+  status: { type: String, default: "Kölcsönözve" },
 });
 
 const userSchema = mongoose.Schema({

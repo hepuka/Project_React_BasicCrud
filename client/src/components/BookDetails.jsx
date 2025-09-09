@@ -15,8 +15,6 @@ const templateRent = {
   bookid: 0,
   startdate: "",
   enddate: "",
-  issued: "Kölcsönözve",
-  issuedays: 0,
 };
 
 const BookDetails = () => {
@@ -67,8 +65,7 @@ const BookDetails = () => {
         bookid: book._id,
         startdate: rent.startdate,
         enddate: rent.enddate,
-        issuedays: rent.issuedays,
-        issued: "Kölcsönözve",
+        status: "Kölcsönözve",
         rentedBy: user.id || 0,
       };
 
