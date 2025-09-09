@@ -19,7 +19,7 @@ const MyProfile = () => {
 
   const loadUserDetails = async () => {
     try {
-      const response = await getUser(currentuser._id);
+      const response = await getUser(currentuser.id);
       const userData = response.data;
       setUser(userData);
 
@@ -34,7 +34,7 @@ const MyProfile = () => {
       console.error("Failed to load user details:", error);
     }
   };
-  console.log(books);
+
   return (
     <>
       <div>
@@ -78,7 +78,7 @@ const MyProfile = () => {
                   <td>{user.rents[index]?.startdate}</td>
                   <td>{user.rents[index]?.enddate}</td>
                   <td>{new Date().toISOString().split("T")[0]}</td>
-                  <td>{user.rents[index]?.issued}</td>
+                  <td>{user.rents[index].status}</td>
                 </tr>
               ))
             ) : (
