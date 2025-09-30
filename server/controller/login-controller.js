@@ -15,7 +15,6 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // ✅ Mark as active
     user.active = true;
     await user.save();
 
